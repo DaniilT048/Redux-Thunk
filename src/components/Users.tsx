@@ -7,16 +7,16 @@ import {LuAccessibility} from "react-icons/lu";
 import {MdError} from "react-icons/md";
 import Card from "./Card.tsx";
 import {WiAlien} from "react-icons/wi";
+import {AppDispatch} from "../store/store.ts";
+import type { User } from '../store/usersSlice';
 
 const Users = (): ReactElement => {
-
-    const dispatch = useDispatch();
-    const users = useSelector(usersSelector);
+    const dispatch = useDispatch<AppDispatch>();
+    const users:User[] = useSelector(usersSelector);
     const loading = useSelector(usersLoadingSelector);
     const [count, setCount] = useState(0);
 
     document.title = "Users Page";
-
     useEffect(() => {
         if (!users?.length) {
             // @ts-ignore

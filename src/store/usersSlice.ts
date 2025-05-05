@@ -1,5 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
+export type User = {
+    id: number;
+    name: string;
+    phone: string;
+    email: string;
+    address: {
+        city: string;
+        street: string;
+    };
+};
+
 const initialState = {
     users: [],
     loading: false,
@@ -23,6 +34,7 @@ const usersSlice = createSlice({
                 getUsersFromServer.fulfilled,
                 (state, action) => {
                     state.loading = false;
+                    // @ts-ignore
                     state.users = action.payload;
                 })
     }
@@ -31,7 +43,7 @@ const usersSlice = createSlice({
 export const getUsersFromServer = createAsyncThunk(
     'users/getUsersFromServer',
     async () => {
-        const users = await fetch(`https://jsonplaceholder.typicode.com/users/`)
+        const users: User[] = await fetch(`https://jsonplaceholder.typicode.com/users/`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error("Something went wrong" + response.statusText);
