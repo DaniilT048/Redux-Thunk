@@ -23,7 +23,10 @@ const router = createBrowserRouter ([
       }
     ]
   }
-]);
+],{
+      basename: "/Redux-Thunk",
+    }
+    );
 
 const App = () =>{
   const theme = useSelector((state: RootState) => state.theme.theme);
