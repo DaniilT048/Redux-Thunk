@@ -9,8 +9,10 @@ interface ToDoState{
     tasks: Task[];
 }
 
+const initialTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+
 const initialState: ToDoState = {
-    tasks: [],
+    tasks: initialTasks,
 }
 
 const toDoSlice: Slice<ToDoState> = createSlice({
@@ -19,15 +21,18 @@ const toDoSlice: Slice<ToDoState> = createSlice({
     reducers:{
         addTask(state, action: PayloadAction<string>){
             state.tasks.push({text: action.payload, done: false})
+            localStorage.setItem("tasks", JSON.stringify(state.tasks));
         },
         doneTask(state, action: PayloadAction<number>){
             const index: number = action.payload;
             if(state.tasks[index]){
                 state.tasks[index].done = !state.tasks[index].done
             }
+            localStorage.setItem("tasks", JSON.stringify(state.tasks));
         },
         deleteTask(state, action: PayloadAction<number>){
             state.tasks.splice(action.payload, 1)
+            localStorage.setItem("tasks", JSON.stringify(state.tasks));
         }
 
     }
